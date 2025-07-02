@@ -14,10 +14,9 @@ load_dotenv()
 GROQ_API_KEY = os.getenv("LLm_API_KEY")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-if not GROQ_API_KEY:
+if not LLm_API_KEY:
     print("WARNING: GROQ_API_KEY not found in environment variables or .env file.")
-    print("Please create a .env file in the same directory with GROQ_API_KEY=\"your_key\"")
-    print("You can get a Groq API key from: https://console.groq.com/keys")
+    print("Please create a .env file in the same directory with LLM_API_KEY=\"your_key\"")
     exit()
 
 if not GOOGLE_API_KEY:
@@ -62,8 +61,8 @@ print("Vector store created.")
 
 retriever = vector_store.as_retriever()
 
-print("Initializing Groq LLM...")
-llm = ChatGroq(model="llama3-80b-8192", groq_api_key=GROQ_API_KEY)
+print("Initializing LLM...")
+llm = ChatGroq(model="llama3-80b-8192", groq_api_key=LLm_API_KEY)
 print("LLM initialized.")
 
 prompt = ChatPromptTemplate.from_template("""
