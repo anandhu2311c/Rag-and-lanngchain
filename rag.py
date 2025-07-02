@@ -7,15 +7,14 @@ from langchain_community.vectorstores import Chroma
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_groq import ChatGroq
 
 load_dotenv()
 
-GROQ_API_KEY = os.getenv("LLm_API_KEY")
+LLm_API_KEY = os.getenv("LLm_API_KEY")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 if not LLm_API_KEY:
-    print("WARNING: GROQ_API_KEY not found in environment variables or .env file.")
+    print("WARNING: LLm_API_KEY not found in environment variables or .env file.")
     print("Please create a .env file in the same directory with LLM_API_KEY=\"your_key\"")
     exit()
 
@@ -33,7 +32,7 @@ if not os.path.exists(pdf_file_path):
     This is a dummy PDF content.
     LangChain is a powerful framework for building LLM applications.
     RAG systems enhance LLMs with external knowledge.
-    Groq provides fast inference for large language models.
+    llm provides fast inference for large language models.
     """
     with open(pdf_file_path, "w") as f:
         f.write(dummy_content)
@@ -62,7 +61,7 @@ print("Vector store created.")
 retriever = vector_store.as_retriever()
 
 print("Initializing LLM...")
-llm = ChatGroq(model="llama3-80b-8192", groq_api_key=LLm_API_KEY)
+llm = Chat(model="llama3-80b-8192", llm_api_key=LLm_API_KEY)
 print("LLM initialized.")
 
 prompt = ChatPromptTemplate.from_template("""
@@ -92,7 +91,7 @@ while True:
         print(f"Answer: {response['answer']}")
     except Exception as e:
         print(f"An error occurred: {e}")
-        print("Please ensure your Groq API Key is valid and has access to the specified model.")
+        print("Please ensure your  API Key is valid and has access to the specified model.")
 
 if os.path.exists(pdf_file_path) and "This is a dummy PDF content" in open(pdf_file_path, "r").read():
     os.remove(pdf_file_path)
